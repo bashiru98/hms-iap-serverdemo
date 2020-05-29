@@ -31,9 +31,20 @@ import java.util.Map;
 public class SubscriptionService {
     // TODO: replace the (ip:port) to the real one, and if the protocol is https, you should deal with the license
     // yourself.
-    public static final String ROOT_URL = "http://ip:port";
+    public static final String TOC_SITE_URL = "http://ip:port";
 
-    public static void getSubscription(String subscriptionId, String purchaseToken) throws Exception {
+    // site for telecom carrier
+    public static final String TOBTOC_SITE_URL = "https://subscr-at-dre.iap.dbankcloud.com";
+
+    public static String getRootUrl(Integer accountFlag) {
+        if (accountFlag != null && accountFlag == 1) {
+            return TOBTOC_SITE_URL;
+        }
+        return TOC_SITE_URL;
+    }
+
+    public static void getSubscription(String subscriptionId, String purchaseToken, Integer accountFlag)
+        throws Exception {
         // fetch the App Level AccessToken
         String appAt = AtDemo.getAppAT();
         // construct the Authorization in Header
@@ -46,13 +57,14 @@ public class SubscriptionService {
 
         String msgBody = JSONObject.toJSONString(bodyMap);
 
-        String response = AtDemo.httpPost(ROOT_URL + "/sub/applications/v2/purchases/get",
+        String response = AtDemo.httpPost(getRootUrl(accountFlag) + "/sub/applications/v2/purchases/get",
             "application/json; charset=UTF-8", msgBody, 5000, 5000, headers);
         // TODO: display the response as string in console, you can replace it with your business logic.
         System.out.println(response);
     }
 
-    public static void stopSubscription(String subscriptionId, String purchaseToken) throws Exception {
+    public static void stopSubscription(String subscriptionId, String purchaseToken, Integer accountFlag)
+        throws Exception {
         // fetch the App Level AccessToken
         String appAt = AtDemo.getAppAT();
         // construct the Authorization in Header
@@ -65,14 +77,14 @@ public class SubscriptionService {
 
         String msgBody = JSONObject.toJSONString(bodyMap);
 
-        String response = AtDemo.httpPost(ROOT_URL + "/sub/applications/v2/purchases/stop",
+        String response = AtDemo.httpPost(getRootUrl(accountFlag) + "/sub/applications/v2/purchases/stop",
             "application/json; charset=UTF-8", msgBody, 5000, 5000, headers);
         // TODO: display the response as string in console, you can replace it with your business logic.
         System.out.println(response);
     }
 
     public static void delaySubscription(String subscriptionId, String purchaseToken, Long currentExpirationTime,
-        Long desiredExpirationTime) throws Exception {
+        Long desiredExpirationTime, Integer accountFlag) throws Exception {
         // fetch the App Level AccessToken
         String appAt = AtDemo.getAppAT();
         // construct the Authorization in Header
@@ -87,13 +99,14 @@ public class SubscriptionService {
 
         String msgBody = JSONObject.toJSONString(bodyMap);
 
-        String response = AtDemo.httpPost(ROOT_URL + "/sub/applications/v2/purchases/delay",
+        String response = AtDemo.httpPost(getRootUrl(accountFlag) + "/sub/applications/v2/purchases/delay",
             "application/json; charset=UTF-8", msgBody, 5000, 5000, headers);
         // TODO: display the response as string in console, you can replace it with your business logic.
         System.out.println(response);
     }
 
-    public static void returnFeeSubscription(String subscriptionId, String purchaseToken) throws Exception {
+    public static void returnFeeSubscription(String subscriptionId, String purchaseToken, Integer accountFlag)
+        throws Exception {
         // fetch the App Level AccessToken
         String appAt = AtDemo.getAppAT();
         // construct the Authorization in Header
@@ -106,13 +119,14 @@ public class SubscriptionService {
 
         String msgBody = JSONObject.toJSONString(bodyMap);
 
-        String response = AtDemo.httpPost(ROOT_URL + "/sub/applications/v2/purchases/returnFee",
+        String response = AtDemo.httpPost(getRootUrl(accountFlag) + "/sub/applications/v2/purchases/returnFee",
             "application/json; charset=UTF-8", msgBody, 5000, 5000, headers);
         // TODO: display the response as string in console, you can replace it with your business logic.
         System.out.println(response);
     }
 
-    public static void withdrawSubscription(String subscriptionId, String purchaseToken) throws Exception {
+    public static void withdrawSubscription(String subscriptionId, String purchaseToken, Integer accountFlag)
+        throws Exception {
         // fetch the App Level AccessToken
         String appAt = AtDemo.getAppAT();
         // construct the Authorization in Header
@@ -125,7 +139,7 @@ public class SubscriptionService {
 
         String msgBody = JSONObject.toJSONString(bodyMap);
 
-        String response = AtDemo.httpPost(ROOT_URL + "/sub/applications/v2/purchases/withdrawal",
+        String response = AtDemo.httpPost(getRootUrl(accountFlag) + "/sub/applications/v2/purchases/withdrawal",
             "application/json; charset=UTF-8", msgBody, 5000, 5000, headers);
         // TODO: display the response as string in console, you can replace it with your business logic.
         System.out.println(response);

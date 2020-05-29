@@ -42,13 +42,14 @@ import java.util.Map;
  */
 public class AtDemo {
     // TODO: The values of (clientId, clientSecret, TokenUrl) should be replaced with the actual one.
-    private static final String clientSecret = "appsecret"; // your client secret
+    private static final String CLIENT_SECRET = "appsecret"; // your client secret
 
     // the client id is your APP ID
-    private static final String clientId = "1234567"; // your app id
+    private static final String CLIENT_ID = "1234567"; // your app id
 
     // token url to get the authorization
-    private static final String tokenUrl = "https://oauth-login.cloud.huawei.com/oauth2/v2/token";
+    private static final String TOKEN_URL = "https://oauth-login.cloud.huawei.com/oauth2/v2/token";
+
 
     /**
      * The accessToken.
@@ -57,17 +58,16 @@ public class AtDemo {
 
     /**
      * Gets App Level AccessToken.
-     *
      * @return the App Level AccessToken
      * @throws Exception the exception
      */
     public static String getAppAT() throws Exception {
         // fetch accessToken
-        String grant_type = "client_credentials";
-        String msgBody = MessageFormat.format("grant_type={0}&client_secret={1}&client_id={2}", grant_type,
-            URLEncoder.encode(clientSecret, "UTF-8"), clientId);
-        String response =
-            httpPost(tokenUrl, "application/x-www-form-urlencoded; charset=UTF-8", msgBody, 5000, 5000, null);
+        String grantType = "client_credentials";
+        String msgBody = MessageFormat.format("grant_type={0}&client_secret={1}&client_id={2}", grantType,
+            URLEncoder.encode(CLIENT_SECRET, "UTF-8"), CLIENT_ID);
+        String response = httpPost(TOKEN_URL, "application/x-www-form-urlencoded; charset=UTF-8",
+            msgBody, 5000, 5000, null);
         JSONObject obj = JSONObject.parseObject(response);
         accessToken = obj.getString("access_token");
 
@@ -94,7 +94,6 @@ public class AtDemo {
 
     /**
      * Http post function.
-     *
      * @param httpUrl        the http url
      * @param data           the data
      * @param connectTimeout the connect timeout
