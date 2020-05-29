@@ -57,9 +57,6 @@ namespace IapDemo
 
             demoConfig.tokenUrl = "http://exampleserver/_mockserver_/oauth2/v2/token";
 
-            demoConfig.orderUrl = "http://exampleserver/_mockserver_";
-
-            demoConfig.subscriptionUrl = "http://exampleserver/_mockserver_";
 
             return demoConfig;
         }
@@ -162,21 +159,28 @@ namespace IapDemo
 
     public class OrderDemo
     {
-        public static void verifyToken(String purchaseToken, String productId)
+        public static String getRootUrl(int accountFlag) {
+                if (accountFlag == 1) {
+                   // site for telecom carrier
+                    return "https://orders-at-dre.iap.dbankcloud.com";
+                }
+                // TODO: replace the (ip:port) to the real one,
+                return "http://ip:port";
+            }
+        public static void verifyToken(String purchaseToken, String productId,int accountFlag)
         {
             var requestHeaders = AtDemo.buildAuthorization();
             Dictionary<string, string> bodyMap = new Dictionary<string, string>();
             bodyMap.Add("purchaseToken", purchaseToken);
             bodyMap.Add("productId", productId);
             var bodyString = JsonSerializer.Serialize(bodyMap);
-            var config = DemoConfig.getDefaultConfig();
-            String responseString = AtDemo.httpPost(config.orderUrl + "/applications/purchases/tokens/verify", "application/json; charset=UTF-8", bodyString, 5, requestHeaders);
+            String responseString = AtDemo.httpPost(getRootUrl(accountFlag) + "/applications/purchases/tokens/verify", "application/json; charset=UTF-8", bodyString, 5, requestHeaders);
 
             // TODO: display the response as string in console, you can replace it with your business logic.
             Console.WriteLine(responseString);
         }
 
-        public static void cancelledListPurchase(long endAt, long startAt, int maxRows, int type, string continuationToken)
+        public static void cancelledListPurchase(long endAt, long startAt, int maxRows, int type, string continuationToken,int accountFlag)
         {
             var requestHeaders = AtDemo.buildAuthorization();
 
@@ -188,19 +192,42 @@ namespace IapDemo
             bodyMap.Add("type", type.ToString());
             bodyMap.Add("continuationToken", continuationToken.ToString());
             var bodyString = JsonSerializer.Serialize(bodyMap);
-            var config = DemoConfig.getDefaultConfig();
 
-            String responseString = AtDemo.httpPost(config.orderUrl + "/applications/v2/purchases/cancelledList", "application/json; charset=UTF-8", bodyString, 5, requestHeaders);
+            String responseString = AtDemo.httpPost(getRootUrl(accountFlag) + "/applications/v2/purchases/cancelledList", "application/json; charset=UTF-8", bodyString, 5, requestHeaders);
 
             // TODO: display the response as string in console, you can replace it with your business logic.
             Console.WriteLine(responseString);
         }
 
+        public static void confirmPurchase(String purchaseToken, String productId,int accountFlag) throws Exception {
+                 var requestHeaders = AtDemo.buildAuthorization();
+
+                // pack the request body
+                Dictionary<string, string> bodyMap = new Dictionary<string, string>();
+                bodyMap.Add("purchaseToken", purchaseToken);
+                bodyMap.Add("productId", productId);
+
+                var bodyString = JsonSerializer.Serialize(bodyMap);
+
+                String responseString = AtDemo.httpPost(getRootUrl(accountFlag) + "/applications/v2/purchases/confirm", "application/json; charset=UTF-8", bodyString, 5, requestHeaders);
+
+                // TODO: display the response as string in console, you can replace it with your business logic.
+                Console.WriteLine(responseString);
+            }
     }
 
     public class SubscriptionDemo
     {
-        public static void getSubscription(string subscriptionId, string purchaseToken)
+
+        public static String getRootUrl(int accountFlag) {
+            if ( accountFlag == 1) {
+               // site for telecom carrier
+                return "https://subscr-at-dre.iap.dbankcloud.com";
+            }
+            // TODO: replace the (ip:port) to the real one,
+            return "http://ip:port";
+        }
+        public static void getSubscription(string subscriptionId, string purchaseToken,int accountFlag)
         {
             var headers = AtDemo.buildAuthorization();
 
@@ -212,14 +239,14 @@ namespace IapDemo
             var bodyString = JsonSerializer.Serialize(bodyMap);
             var config = DemoConfig.getDefaultConfig();
 
-            String responseString = AtDemo.httpPost(config.subscriptionUrl + "/sub/applications/v2/purchases/get",
+            String responseString = AtDemo.httpPost(getRootUrl(accountFlag) + "/sub/applications/v2/purchases/get",
             "application/json; charset=UTF-8", bodyString, 5, headers);
 
             // TODO: display the response as string in console, you can replace it with your business logic.
             Console.WriteLine(responseString);
         }
 
-        public static void stopSubscription(string subscriptionId, string purchaseToken)
+        public static void stopSubscription(string subscriptionId, string purchaseToken,int accountFlag)
         {
             var headers = AtDemo.buildAuthorization();
 
@@ -229,9 +256,8 @@ namespace IapDemo
             bodyMap.Add("purchaseToken", purchaseToken);
 
             var bodyString = JsonSerializer.Serialize(bodyMap);
-            var config = DemoConfig.getDefaultConfig();
 
-            String responseString = AtDemo.httpPost(config.subscriptionUrl + "/sub/applications/v2/purchases/stop",
+            String responseString = AtDemo.httpPost(getRootUrl(accountFlag) + "/sub/applications/v2/purchases/stop",
                 "application/json; charset=UTF-8", bodyString, 5, headers);
 
             // TODO: display the response as string in console, you can replace it with your business logic.
@@ -239,7 +265,7 @@ namespace IapDemo
         }
 
         public static void delaySubscription(string subscriptionId, string purchaseToken, long currentExpirationTime,
-            long desiredExpirationTime)
+            long desiredExpirationTime,int accountFlag)
         {
             var headers = AtDemo.buildAuthorization();
 
@@ -250,16 +276,15 @@ namespace IapDemo
             bodyMap.Add("currentExpirationTime", currentExpirationTime + "");
             bodyMap.Add("desiredExpirationTime", desiredExpirationTime + "");
             var bodyString = JsonSerializer.Serialize(bodyMap);
-            var config = DemoConfig.getDefaultConfig();
 
-            String responseString = AtDemo.httpPost(config.subscriptionUrl + "/sub/applications/v2/purchases/delay",
+            String responseString = AtDemo.httpPost(getRootUrl(accountFlag) + "/sub/applications/v2/purchases/delay",
             "application/json; charset=UTF-8", bodyString, 5, headers);
 
             // TODO: display the response as string in console, you can replace it with your business logic.
             Console.WriteLine(responseString);
         }
 
-        public static void returnFeeSubscription(string subscriptionId, string purchaseToken)
+        public static void returnFeeSubscription(string subscriptionId, string purchaseToken,int accountFlag)
         {
             var headers = AtDemo.buildAuthorization();
 
@@ -269,16 +294,15 @@ namespace IapDemo
             bodyMap.Add("purchaseToken", purchaseToken);
 
             var bodyString = JsonSerializer.Serialize(bodyMap);
-            var config = DemoConfig.getDefaultConfig();
 
-            String responseString = AtDemo.httpPost(config.subscriptionUrl + "/sub/applications/v2/purchases/returnFee",
+            String responseString = AtDemo.httpPost(getRootUrl(accountFlag) + "/sub/applications/v2/purchases/returnFee",
             "application/json; charset=UTF-8", bodyString, 5, headers);
 
             // TODO: display the response as string in console, you can replace it with your business logic.
             Console.WriteLine(responseString);
         }
 
-        public static void withdrawalSubscription(string subscriptionId, string purchaseToken)
+        public static void withdrawalSubscription(string subscriptionId, string purchaseToken,int accountFlag)
         {
             var headers = AtDemo.buildAuthorization();
 
@@ -288,9 +312,8 @@ namespace IapDemo
             bodyMap.Add("purchaseToken", purchaseToken);
 
             var bodyString = JsonSerializer.Serialize(bodyMap);
-            var config = DemoConfig.getDefaultConfig();
 
-            String responseString = AtDemo.httpPost(config.subscriptionUrl + "/sub/applications/v2/purchases/withdrawal",
+            String responseString = AtDemo.httpPost(getRootUrl(accountFlag) + "/sub/applications/v2/purchases/withdrawal",
                 "application/json; charset=UTF-8", bodyString, 5, headers);
 
             // TODO: display the response as string in console, you can replace it with your business logic.
@@ -327,7 +350,7 @@ namespace IapDemo
         public long autoRenewStatus { get; set; }
         public string refundPayOrderId { get; set; }
         public string productId { get; set; }
-        public long applicationId { get; set; }
+        public string applicationId { get; set; }
         public int expirationIntent { get; set; }
     }
 
@@ -357,6 +380,7 @@ namespace IapDemo
             if (!checkRet)
             {
                 Console.WriteLine("rsa sign check fail");
+                return;
             }
 
             var info = JsonSerializer.Deserialize<StatusUpdateNotification>(request.statusUpdateNotification);

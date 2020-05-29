@@ -18,9 +18,13 @@
     clientId:      Client ID, which is obtained from app information.
     clientSecret:  Secret access key of an app, which is obtained from app information.
     tokenUrl:      URL for the Huawei OAuth 2.0 service to obtain a token, please refer to Generating an App-Level Access Token.
-    orderUrl:      The orderUrl has different urls at different sites, you should always choose the OrderService address of the nearest site to access.
-    subscriptionUrl:    The subscriptionUrl has different urls at different sites, you should always choose the SubscriptionDemo address of the nearest site to access.
     applicationPublicKey:   Application RSA publick key, base64 encode string. 
+    
+    At first, the meaning of accountFlag should be clear.If field accountFlag in InappPurchaseData equals to 1, 
+    the account belongs to telecom carrier(TOBTOC_SITE_URL), otherwise to Huawei(TOC_SITE_URL).  
+    For both OrderService and SubscriptionService, you need to choose appropriate site.
+    TOC_SITE_URL:      The TOC_SITE_URL has different urls at different sites, you should always choose the address of the nearest site to access.
+    TOBTOC_SITE_URL:   The site for telecom carrier.
 
 ## Example Code
     Each method in the sample calls an API of the HUAWEI IAP server.
@@ -69,6 +73,13 @@
     You can call this method to handle subscription event notifications.
     The information parameter is obtained from subscription event notification.
     Code location Demo.cs  NotificationDemo.dealNotification()
+    
+    10). OrderService: confirmPurchase()
+    You can call this method to confirm purchase after sending out product.
+    The URL is {rootUrl}/applications/{apiVersion}/purchases/confirm. The rootUrl has different urls at different sites, you should always choose the Order service address of the nearest site to access.
+    Code location Demo.cs OrderDemo.confirmPurchase
+    
+    
 
 
 ##  License
