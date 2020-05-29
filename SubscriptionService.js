@@ -18,15 +18,28 @@
 const AtDemo = require('./AtDemo');
 
 // TODO: replace the (ip:port) to the real one, and if the protocol is https, you should deal with the license yourself.
-const rootUrl = 'http://ip:port';
+const TOC_SITE_URL = 'http://ip:port';
+const TOBTOC_SITE_URL = 'http://ip:port';
 
 // the request url
-const getSubscriptionUrl = rootUrl + '/sub/applications/v2/purchases/get';
+const getSubscriptionUrl = '/sub/applications/v2/purchases/get';
 // the request body, values of the request body should be replaced with the actual one.
 const getSubscriptionRequest = {
     purchaseToken: '1111111111.1.11111',
     subscriptionId: '11111',
 };
+
+/*
+ * get the root url
+ * 
+ * @param accountFlag  the accountFlag
+ */
+var getRootUrl = function (accountFlag) {
+    if (accountFlag && accountFlag == 1) {
+        return TOBTOC_SITE_URL;
+    }
+    return TOC_SITE_URL;
+}
 
 /*
  * the callback of getSubscription
@@ -45,13 +58,13 @@ var getSubscriptionCallback = function (errorMsg, response) {
 };
 
 // execute the getSubscriptionRequest
-var getSubscription = function () {
-    AtDemo.getAppAtAndExecuteRequest(getSubscriptionUrl, getSubscriptionRequest, getSubscriptionCallback);
+var getSubscription = function (accountFlag) {
+    AtDemo.getAppAtAndExecuteRequest(getRootUrl(accountFlag) + getSubscriptionUrl, getSubscriptionRequest, getSubscriptionCallback);
 };
 
 
 // the request url
-const stopSubscriptionUrl = rootUrl + '/sub/applications/v2/purchases/stop';
+const stopSubscriptionUrl = '/sub/applications/v2/purchases/stop';
 // the request body, values of the request body should be replaced with the actual one.
 const stopSubscriptionRequest = {
     purchaseToken: '1111111111.1.11111',
@@ -75,13 +88,13 @@ var stopSubscriptionCallback = function (errorMsg, response) {
 };
 
 // execute the stopSubscriptionRequest
-var stopSubscription = function () {
-    AtDemo.getAppAtAndExecuteRequest(stopSubscriptionUrl, stopSubscriptionRequest, stopSubscriptionCallback);
+var stopSubscription = function (accountFlag) {
+    AtDemo.getAppAtAndExecuteRequest(getRootUrl(accountFlag) + stopSubscriptionUrl, stopSubscriptionRequest, stopSubscriptionCallback);
 };
 
 
 // the request url
-const delaySubscriptionUrl = rootUrl + '/sub/applications/v2/purchases/delay';
+const delaySubscriptionUrl =  '/sub/applications/v2/purchases/delay';
 // the request body, values of the request body should be replaced with the actual one.
 const delaySubscriptionRequest = {
     purchaseToken: '1111111111.1.11111',
@@ -107,13 +120,13 @@ var delaySubscriptionCallback = function (errorMsg, response) {
 };
 
 // execute the delaySubscriptionRequest
-var delaySubscription = function () {
-    AtDemo.getAppAtAndExecuteRequest(delaySubscriptionUrl, delaySubscriptionRequest, delaySubscriptionCallback);
+var delaySubscription = function (accountFlag) {
+    AtDemo.getAppAtAndExecuteRequest(getRootUrl(accountFlag) + delaySubscriptionUrl, delaySubscriptionRequest, delaySubscriptionCallback);
 };
 
 
 // the request url
-const returnFeeSubscriptionUrl = rootUrl + '/sub/applications/v2/purchases/returnFee';
+const returnFeeSubscriptionUrl = '/sub/applications/v2/purchases/returnFee';
 // the request body, values of the request body should be replaced with the actual one.
 const returnFeeSubscriptionRequest = {
     purchaseToken: '1111111111.1.11111',
@@ -137,12 +150,12 @@ var returnFeeSubscriptionCallback = function (errorMsg, response) {
 };
 
 // execute the returnFeeSubscriptionRequest
-var returnFeeSubscription = function () {
-    AtDemo.getAppAtAndExecuteRequest(returnFeeSubscriptionUrl, returnFeeSubscriptionRequest, returnFeeSubscriptionCallback);
+var returnFeeSubscription = function (accountFlag) {
+    AtDemo.getAppAtAndExecuteRequest(getRootUrl(accountFlag) + returnFeeSubscriptionUrl, returnFeeSubscriptionRequest, returnFeeSubscriptionCallback);
 };
 
 // the request url
-const withdrawalSubscriptionUrl = rootUrl + '/sub/applications/v2/purchases/withdrawal';
+const withdrawalSubscriptionUrl = '/sub/applications/v2/purchases/withdrawal';
 // the request body, values of the request body should be replaced with the actual one.
 const withdrawalSubscriptionRequest = {
     purchaseToken: '1111111111.1.11111',
@@ -166,12 +179,12 @@ var withdrawalSubscriptionCallback = function (errorMsg, response) {
 };
 
 // execute the withdrawalSubscriptionRequest
-var withdrawalSubscription = function () {
-    AtDemo.getAppAtAndExecuteRequest(withdrawalSubscriptionUrl, withdrawalSubscriptionRequest, withdrawalSubscriptionCallback);
+var withdrawalSubscription = function (accountFlag) {
+    AtDemo.getAppAtAndExecuteRequest(getRootUrl(accountFlag) + withdrawalSubscriptionUrl, withdrawalSubscriptionRequest, withdrawalSubscriptionCallback);
 };
 
-getSubscription();
-stopSubscription();
-delaySubscription();
-returnFeeSubscription();
-withdrawalSubscription();
+getSubscription(0);
+stopSubscription(0);
+delaySubscription(0);
+returnFeeSubscription(0);
+withdrawalSubscription(0);
