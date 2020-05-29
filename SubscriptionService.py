@@ -22,14 +22,20 @@ class SubscriptionService:
     """Demo Service To Request To Subscription Server"""
     def __init__(self):
         # TODO: replace the (ip:port) to the real one, and if the protocol is https, you should deal with the license
-        self.baseUrl = "http://ip:port"
-        self.getSubscriptionUrl = "%s/sub/applications/v2/purchases/get" % self.baseUrl
-        self.stopSubscriptionUrl = "%s/sub/applications/v2/purchases/stop" % self.baseUrl
-        self.delaySubscriptionUrl = "%s/sub/applications/v2/purchases/delay" % self.baseUrl
-        self.returnSubscriptionUrl = "%s/sub/applications/v2/purchases/returnFee" % self.baseUrl
-        self.withdrawSubscriptionUrl = "%s/sub/applications/v2/purchases/withdrawal" % self.baseUrl
+        self.TOC_SITE_URL = "http://ip:port"
+        self.TOBTOC_SITE_URL = "http://ip:port"
+        self.getSubscriptionUrl = "%s/sub/applications/v2/purchases/get"
+        self.stopSubscriptionUrl = "%s/sub/applications/v2/purchases/stop"
+        self.delaySubscriptionUrl = "%s/sub/applications/v2/purchases/delay"
+        self.returnSubscriptionUrl = "%s/sub/applications/v2/purchases/returnFee"
+        self.withdrawSubscriptionUrl = "%s/sub/applications/v2/purchases/withdrawal"
 
-    def getSubscription(self, subscriptionId, purchaseToken):
+    def getRootUrl(self, accountFlag):
+        if accountFlag is not None and accountFlag == 1:
+            return self.TOBTOC_SITE_URL
+        return self.TOC_SITE_URL
+
+    def getSubscription(self, subscriptionId, purchaseToken, accountFlag):
         # fetch the App Level AccessToken
         appAt = AtDemo.getAppAT()
         if appAt is None or appAt == "":
@@ -39,11 +45,11 @@ class SubscriptionService:
         # pack the request body
         bodyDict = {"subscriptionId": subscriptionId, "purchaseToken": purchaseToken}
         data = json.dumps(bodyDict)
-        response = AtDemo.httpPost(self.getSubscriptionUrl, str.encode(data), headers)
+        response = AtDemo.httpPost(self.getSubscriptionUrl % self.getRootUrl(accountFlag), str.encode(data), headers)
         # TODO: display the response as string in console, you can replace it with your business logic.
         print(response)
 
-    def stopSubscription(self, subscriptionId, purchaseToken):
+    def stopSubscription(self, subscriptionId, purchaseToken, accountFlag):
         # fetch the App Level AccessToken
         appAt = AtDemo.getAppAT()
         if appAt is None or appAt == "":
@@ -53,11 +59,11 @@ class SubscriptionService:
         # pack the request body
         bodyDict = {"subscriptionId": subscriptionId, "purchaseToken": purchaseToken}
         data = json.dumps(bodyDict)
-        response = AtDemo.httpPost(self.stopSubscriptionUrl, str.encode(data), headers)
+        response = AtDemo.httpPost(self.stopSubscriptionUrl % self.getRootUrl(accountFlag), str.encode(data), headers)
         # TODO: display the response as string in console, you can replace it with your business logic.
         print(response)
 
-    def delaySubscription(self, subscriptionId, purchaseToken, currentExpirationTime, desiredExpirationTime):
+    def delaySubscription(self, subscriptionId, purchaseToken, currentExpirationTime, desiredExpirationTime, accountFlag):
         # fetch the App Level AccessToken
         appAt = AtDemo.getAppAT()
         if appAt is None or appAt == "":
@@ -68,11 +74,11 @@ class SubscriptionService:
         bodyDict = {"subscriptionId": subscriptionId, "purchaseToken": purchaseToken,
                     "currentExpirationTime": currentExpirationTime, "desiredExpirationTime": desiredExpirationTime}
         data = json.dumps(bodyDict)
-        response = AtDemo.httpPost(self.delaySubscriptionUrl, str.encode(data), headers)
+        response = AtDemo.httpPost(self.delaySubscriptionUrl % self.getRootUrl(accountFlag), str.encode(data), headers)
         # TODO: display the response as string in console, you can replace it with your business logic.
         print(response)
 
-    def returnFeeSubscription(self, subscriptionId, purchaseToken):
+    def returnFeeSubscription(self, subscriptionId, purchaseToken, accountFlag):
         # fetch the App Level AccessToken
         appAt = AtDemo.getAppAT()
         if appAt is None or appAt == "":
@@ -81,11 +87,11 @@ class SubscriptionService:
         headers = AtDemo.buildAuthorization(appAt)
         bodyDict = {"subscriptionId": subscriptionId, "purchaseToken": purchaseToken}
         data = json.dumps(bodyDict)
-        response = AtDemo.httpPost(self.returnSubscriptionUrl, str.encode(data), headers)
+        response = AtDemo.httpPost(self.returnSubscriptionUrl % self.getRootUrl(accountFlag), str.encode(data), headers)
         # TODO: display the response as string in console, you can replace it with your business logic.
         print(response)
 
-    def withdrawSubscription(self, subscriptionId, purchaseToken):
+    def withdrawSubscription(self, subscriptionId, purchaseToken, accountFlag):
         # fetch the App Level AccessToken
         appAt = AtDemo.getAppAT()
         if appAt is None or appAt == "":
@@ -94,7 +100,7 @@ class SubscriptionService:
         headers = AtDemo.buildAuthorization(appAt)
         bodyDict = {"subscriptionId": subscriptionId, "purchaseToken": purchaseToken}
         data = json.dumps(bodyDict)
-        response = AtDemo.httpPost(self.withdrawSubscriptionUrl, str.encode(data), headers)
+        response = AtDemo.httpPost(self.withdrawSubscriptionUrl % self.getRootUrl(accountFlag), str.encode(data), headers)
         # TODO: display the response as string in console, you can replace it with your business logic.
         print(response)
 
