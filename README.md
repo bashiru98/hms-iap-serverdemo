@@ -1,4 +1,4 @@
-## iap-java-sample
+# iap-java-sample
 
 
 ## Table of Contents
@@ -128,6 +128,9 @@ You can call this method to confirm purchase after sending out product.
 The URL is {rootUrl}/applications/{apiVersion}/purchases/confirm. The rootUrl has different urls at different sites, you should always choose the Order service address of the nearest site to access.
 
 Code location   OrderService.java
+
+## Feedback
+Ask a question on [Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-iap) or the [HUAWEI Developer Forum](https://forums.developer.huawei.com/forumPortal/en/home?fid=0101187876626530001)
     
 ##  License
 IAP Java sample is licensed under the [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
