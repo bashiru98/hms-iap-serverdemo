@@ -1,4 +1,4 @@
-# iap-java-sample
+# HMS IAP(In-App Purchases) Severdemo
 
 
 ## Table of Contents
