@@ -1,4 +1,4 @@
-# HMS IAP(In-App Purchases) Severdemo
+# HMS In-App Purchases(IAP) Severdemo
 
 
 ## Table of Contents
