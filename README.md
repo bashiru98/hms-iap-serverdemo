@@ -8,6 +8,7 @@
  * [Configuration ](#configuration )
  * [Supported Environments](#supported-environments)
  * [Sample Code](#sample-code)
+ * [Feedback](#feedback)
  * [License](#license)
  
  
