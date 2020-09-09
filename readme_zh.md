@@ -1,5 +1,5 @@
 ## 华为应用内支付服务服务端示例代码
-
+[English](https://github.com/HMS-Core/hms-iap-serverdemo) | 中文
 
 ## 目录
 
@@ -8,7 +8,7 @@
  * [环境要求](#环境要求)
  * [配置](#配置)
  * [示例代码](#示例代码)
- * [问题反馈](#问题反馈)
+ * [技术支持](#技术支持)
  * [授权许可](#授权许可)
  
  
@@ -95,8 +95,14 @@ PUBLIC_KEY：RSA公钥。<br>
     地址：{rootUrl}/applications/{apiVersion}/purchases/confirm。rootUrl在不同的站点有不同的地址，开发者应选择接入可访问的最近的Order服务地址。
     代码路径：OrderService.java
 
-## 问题反馈
-如果在开发过程中碰到问题，可以到[Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-iap)或者[华为开发者联盟论坛](https://developer.huawei.com/consumer/cn/forum/home)上发帖求助。
+## 技术支持
+如果您对HMS Core还处于评估阶段，可在[Reddit社区](https://www.reddit.com/r/HMSCore/)获取关于HMS Core的最新讯息，并与其他开发者交流见解。
+
+如果您对使用HMS示例代码有疑问，请尝试：
+- 开发过程遇到问题上[Stack Overflow](https://stackoverflow.com/questions/tagged/huawei-mobile-services)，在[huawei-mobile-services]标签下提问，有华为研发专家在线一对一解决您的问题。
+- 到[华为开发者论坛](https://developer.huawei.com/consumer/cn/forum/blockdisplay?fid=18) HMS Core板块与其他开发者进行交流。
+
+如果您在尝试示例代码中遇到问题，请向仓库提交[issue](https://github.com/HMS-Core/hms-nearby-demo/issues)，也欢迎您提交[Pull Request](https://github.com/HMS-Core/hms-nearby-demo/pulls)。
 
 ## 授权许可
 华为应用内支付服务服务端示例代码经过[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)授权许可。
