@@ -1,5 +1,5 @@
 # HMS In-App Purchases(IAP) Severdemo
-English | [中文](https://github.com/HMS-Core/hms-iap-serverdemo/blob/master/readme_zh.md)
+English | [中文](https://github.com/HMS-Core/hms-iap-clientdemo-android-studio/blob/master/readme_zh.md)
 
 ## Table of Contents
 
