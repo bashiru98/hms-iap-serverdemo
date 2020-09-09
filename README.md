@@ -1,5 +1,5 @@
 # HMS In-App Purchases(IAP) Severdemo
-
+English | [中文](https://github.com/HMS-Core/hms-iap-serverdemo/blob/master/readme_zh.md)
 
 ## Table of Contents
 
@@ -131,7 +131,7 @@ The URL is {rootUrl}/applications/{apiVersion}/purchases/confirm. The rootUrl ha
 Code location   OrderService.java
 
 ## Question or issues
-If you want to evaluate more about HMS Core:
+If you want to evaluate more about HMS Core, 
 [r/HMSCore on Reddit](https://www.reddit.com/r/HMSCore/) is for you to keep up with latest news about HMS Core, and to exchange insights with other developers.
 
 If you have questions about how to use HMS samples, try the following options:
